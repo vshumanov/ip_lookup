@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: ip_lookup
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+
+  django:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:3000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
